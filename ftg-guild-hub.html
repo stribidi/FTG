@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForTheGlory — Guild Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS ─────────────────────────────────────── */
+    :root {
+      --bg:        #07070d;
+      --bg2:       #0e0e18;
+      --bg3:       #13131f;
+      --panel:     rgba(255,255,255,0.03);
+      --border:    rgba(201,168,76,0.18);
+      --border-hi: rgba(201,168,76,0.55);
+      --gold:      #c9a84c;
+      --gold-dim:  #8a6d2c;
+      --gold-hi:   #e8c76a;
+      --crimson:   #8b1a1a;
+      --crimson-hi:#c0282a;
+      --text:      #d4cfc4;
+      --text-dim:  #7a7468;
+      --text-hi:   #f0ead8;
+      --green:     #3a7a4a;
+      --green-hi:  #58b36a;
+      --blue:      #2a4a7a;
+      --blue-hi:   #4a7aaa;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND TEXTURE ────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,26,26,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(201,168,76,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* noise grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── LAYOUT ─────────────────────────────────────────────── */
+    .wrapper { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--border);
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .guild-logo {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .crest {
+      width: 56px; height: 56px;
+      background: radial-gradient(circle at 40% 35%, var(--gold-dim), #3a2808);
+      border: 2px solid var(--gold);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 0 20px rgba(201,168,76,0.25), inset 0 0 10px rgba(0,0,0,0.5);
+      transform: rotate(2deg);
+      flex-shrink: 0;
+    }
+
+    .guild-name {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .guild-name h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 1.75rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 30px rgba(201,168,76,0.4);
+      line-height: 1;
+    }
+
+    .guild-name .tagline {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .server-badge {
+      background: var(--crimson);
+      border: 1px solid rgba(192,40,42,0.6);
+      color: #e8b4b4;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    /* ─── COUNTDOWN ──────────────────────────────────────────── */
+    .countdown-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .countdown-digits {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .cd-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .cd-num {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      min-width: 2.2rem;
+      text-align: center;
+      text-shadow: 0 0 15px rgba(201,168,76,0.5);
+    }
+
+    .cd-lbl {
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .cd-sep {
+      font-size: 1.2rem;
+      color: var(--gold-dim);
+      margin-bottom: 12px;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* ─── NAVIGATION TABS ────────────────────────────────────── */
+    nav {
+      display: flex;
+      gap: 0;
+      margin: 2rem 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      padding: 0.8rem 1.6rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .tab-btn:hover { color: var(--gold); }
+
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-btn .tab-count {
+      display: inline-block;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: 2px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .tab-btn.active .tab-count { border-color: var(--gold-dim); color: var(--gold-dim); }
+
+    /* ─── TAB PANELS ─────────────────────────────────────────── */
+    .tab-panel { display: none; padding: 2rem 0; animation: fadeIn 0.25s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ─── SECTION HEADER ─────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-hi), transparent);
+    }
+
+    /* ─── FILTER ROW ─────────────────────────────────────────── */
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 5px 12px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active { border-color: var(--gold-dim); color: var(--gold); background: rgba(201,168,76,0.06); }
+    .filter-btn.active { background: rgba(201,168,76,0.1); }
+
+    /* ─── ROSTER GRID ─────────────────────────────────────────── */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .member-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem 1.1rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .member-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--class-color, var(--gold-dim)), transparent);
+      opacity: 0.7;
+    }
+
+    .member-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 0 20px rgba(201,168,76,0.08);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .class-icon {
+      width: 38px; height: 38px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .class-icon .class-initial {
+      position: absolute;
+      bottom: -1px; right: -1px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      color: var(--class-color, var(--gold));
+      background: var(--bg);
+      padding: 0 2px;
+      border-radius: 1px;
+    }
+
+    .member-info { flex: 1; min-width: 0; }
+
+    .member-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-hi);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .member-meta {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    .activity-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .act-hardcore { background: var(--green-hi); box-shadow: 0 0 6px var(--green-hi); }
+    .act-active   { background: var(--gold); }
+    .act-casual   { background: var(--text-dim); }
+
+    /* gear needs */
+    .gear-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 0.6rem;
+    }
+
+    .gear-chip {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .gear-essence { background: rgba(74,122,170,0.1); border-color: rgba(74,122,170,0.4); color: var(--blue-hi); }
+    .gear-armor   { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.3); color: var(--gold-dim); }
+    .gear-weapon  { background: rgba(139,26,26,0.12); border-color: rgba(192,40,42,0.35); color: #c08080; }
+    .gear-ring    { background: rgba(90,50,140,0.12); border-color: rgba(130,80,200,0.35); color: #b090d8; }
+
+    .member-rank {
+      position: absolute;
+      top: 8px; right: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    /* ─── STAT STRIP ─────────────────────────────────────────── */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .stat-cell {
+      background: var(--bg2);
+      padding: 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-val {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-lbl {
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ─── CASTLE WAR ─────────────────────────────────────────── */
+    .parties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .party-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .party-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 1rem;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .party-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .party-role-badge {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .role-frontline { background: rgba(139,26,26,0.2); border: 1px solid rgba(192,40,42,0.4); color: #c08080; }
+    .role-support   { background: rgba(74,122,170,0.15); border: 1px solid rgba(74,122,170,0.4); color: var(--blue-hi); }
+    .role-dps       { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-dim); }
+
+    .party-members { padding: 0.5rem 0; }
+
+    .party-member {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.4rem 1rem;
+      transition: background 0.15s ease;
+    }
+
+    .party-member:hover { background: rgba(255,255,255,0.02); }
+
+    .party-member.is-leader {
+      background: rgba(201,168,76,0.04);
+    }
+
+    .pm-icon {
+      width: 26px; height: 26px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .pm-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      color: var(--text-hi);
+      flex: 1;
+    }
+
+    .pm-class {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+    }
+
+    .leader-crown {
+      font-size: 0.65rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .party-empty { height: 5px; } /* spacing for empty slots */
+
+    .empty-slot {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.4rem 1rem;
+      opacity: 0.25;
+    }
+
+    .empty-slot .pm-icon { border-style: dashed; }
+    .empty-slot .pm-name { font-family: 'Rajdhani', sans-serif; font-size: 0.68rem; color: var(--text-dim); font-style: italic; }
+
+    /* ─── DATA NOTE ──────────────────────────────────────────── */
+    .data-note {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .data-note-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green-hi);
+      box-shadow: 0 0 6px var(--green-hi);
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .refresh-btn {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 3px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-left: auto;
+      transition: all 0.15s ease;
+    }
+
+    .refresh-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+    /* ─── CLASS LEGEND ───────────────────────────────────────── */
+    .class-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
+    .footer-right {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .guild-name h1 { font-size: 1.35rem; }
+      .tab-btn { padding: 0.8rem 1rem; font-size: 0.7rem; }
+      .cd-num { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+  <header>
+    <div class="guild-logo">
+    <div class="crest">
+      <img src="icons/guild-logo.png" alt="FTG" style="width:44px;height:44px;object-fit:contain;image-rendering:pixelated;"
+           onerror="this.style.display='none';this.nextSibling.style.display='flex'" />
+      <span style="display:none;font-size:1.8rem;align-items:center;justify-content:center;">⚔️</span>
+    </div>
+      <div class="guild-name">
+        <h1>ForTheGlory <span class="server-badge" id="serverName">PROJECT X</span></h1>
+        <div class="tagline">Once for the Glory, Always ForTheGlory</div>
+      </div>
+    </div>
+
+    <div class="countdown-bar">
+      <div class="countdown-label">Castle War</div>
+      <div class="countdown-digits">
+        <div class="cd-unit"><span class="cd-num" id="cdDays">00</span><span class="cd-lbl">Days</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-lbl">Hours</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-lbl">Mins</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-lbl">Secs</span></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ NAVIGATION ═══════════════════════════════════════════ -->
+  <nav>
+    <button class="tab-btn active" onclick="switchTab('roster')">
+      Roster <span class="tab-count" id="rosterCount">0</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('castlewar')">
+      Castle War <span class="tab-count" id="cwCount">0</span>
+    </button>
+  </nav>
+
+  <!-- ═══ TAB: ROSTER ══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="panel-roster">
+
+    <div class="data-note">
+      <div class="data-note-dot"></div>
+      <span>Live from Google Sheets — <span id="lastUpdated">loading...</span></span>
+      <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-strip" id="statStrip">
+      <div class="stat-cell"><div class="stat-val" id="statTotal">—</div><div class="stat-lbl">Members</div></div>
+      <div class="stat-cell"><div class="stat-val" id="statHardcore">—</div><div class="stat-lbl">Diehard</div></div>
+      <div class="stat-cell"><div class="stat-val" id="statNeedEssence">—</div><div class="stat-lbl">Commy Network</div></div>
+      <div class="stat-cell"><div class="stat-val" id="statNeedArmor">—</div><div class="stat-lbl">Need G60 Armor</div></div>
+      <div class="stat-cell"><div class="stat-val" id="statNeedWeapon">—</div><div class="stat-lbl">Need G62 Weapon</div></div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+      <!-- Class filters injected by JS -->
+    </div>
+
+    <!-- Grid -->
+    <div class="roster-grid" id="rosterGrid">
+      <!-- member cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ TAB: CASTLE WAR ══════════════════════════════════════ -->
+  <div class="tab-panel" id="panel-castlewar">
+
+    <div class="data-note">
+      <div class="data-note-dot"></div>
+      <span>Party compositions — <span id="cwUpdated">loading...</span></span>
+      <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    </div>
+
+    <div class="parties-grid" id="partiesGrid">
+      <!-- party cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-left">ForTheGlory — grass is an illusion</div>
+    <div class="footer-right">FTG Guild Hub · KalOnline</div>
+  </footer>
+
+</div>
+
+<!-- ═══ SCRIPTS ═══════════════════════════════════════════════ -->
+<script>
+/* ─────────────────────────────────────────────────────────────
+   CONFIG — replace these values before deploying
+   ───────────────────────────────────────────────────────────── */
+const CONFIG = {
+  // Google Sheets API
+  API_KEY:        'YOUR_GOOGLE_API_KEY',
+  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID',
+  RANGE_ROSTER:   'Server plan!A2:Z200',   // adjust sheet name if needed
+  RANGE_PARTIES:  'Guild Status!A1:J100',  // adjust sheet name if needed
+
+  // Server settings
+  SERVER_NAME: 'PROJECT X',
+
+  // Castle War day/time (0=Sun, 1=Mon, ... 6=Sat)
+  CW_DAY:  0,    // Sunday
+  CW_HOUR: 20,   // 20:00 UTC+1
+  CW_MIN:  0,
+  CW_TZ_OFFSET: 1, // UTC+1
+
+  // Column indices in "Server plan" sheet (0-based)
+  // Adjust if your sheet columns are in a different order
+  COL: {
+    NAME:      0,
+    CLASS:     1,
+    ACTIVITY:  3,   // "Server Start Plan" (Hardcore / Active / Casual)
+    DISCORD:   5,
+    IS_ALLY:   6,
+    NEED:      7,   // "Do you need something?" free text
+    ESS_FIRE:  8,
+    ESS_WATER: 9,
+    ESS_EARTH: 10,
+    ESS_WOOD:  11,
+    ESS_IRON:  12,
+    ESS_LIFE:  13,
+    HEART:     14,
+    RING:      15,
+    WEAPON:    16,  // G62 weapon type
+    CHEST:     17,
+    SHORTS:    18,
+    BOOTS:     19,
+    GLOVES:    20,
+    HELMET:    21,
+  }
+};
+
+/* ─────────────────────────────────────────────────────────────
+   CLASS DEFINITIONS
+   6 classes across 3 archetypes.
+   icons: <img> tags pointing to /icons/<filename>.png once you have the sprites.
+   For now using styled text badges as placeholders — swap icon field to
+   an <img> tag when you drop the real assets into the /icons/ folder.
+   ───────────────────────────────────────────────────────────── */
+const CLASSES = {
+  // Knight archetype
+  'Commander': { icon: 'icons/commander.png', emoji: '⚔️', color: '#c0282a', short: 'CMD', archetype: 'Knight' },
+  'Vagabond':  { icon: 'icons/vagabond.png',  emoji: '🗡️', color: '#e07040', short: 'VAG', archetype: 'Knight' },
+  // Archer archetype
+  'EA':        { icon: 'icons/ea.png',         emoji: '🏹', color: '#58b36a', short: 'EA',  archetype: 'Archer' },
+  'IC':        { icon: 'icons/ic.png',         emoji: '🌿', color: '#3a9a5a', short: 'IC',  archetype: 'Archer' },
+  // Mage archetype
+  'Hermit':    { icon: 'icons/hermit.png',     emoji: '🔮', color: '#7a7ae8', short: 'HRM', archetype: 'Mage'   },
+  'CJB':       { icon: 'icons/cjb.png',        emoji: '✨', color: '#c9a84c', short: 'CJB', archetype: 'Mage'   },
+};
+
+/* ─────────────────────────────────────────────────────────────
+   STATE
+   ───────────────────────────────────────────────────────────── */
+let rosterData   = [];
+let partiesData  = [];
+let activeFilter = 'all';
+let useMockData  = (CONFIG.API_KEY === 'YOUR_GOOGLE_API_KEY');
+
+/* ─────────────────────────────────────────────────────────────
+   MOCK DATA (used when no API key is configured)
+   ───────────────────────────────────────────────────────────── */
+const MOCK_ROSTER = [
+  { name:'LucLK',     cls:'Commander', activity:'Diehard', essences:['Fire','Iron'],   armor:['Chest','Boots'],   weapon:'G62 Sword', ring:true,  heart:false, discord:true,  ally:false },
+  { name:'Drakon',    cls:'Vagabond',  activity:'Diehard', essences:['Water'],          armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
+  { name:'Sylvara',   cls:'Hermit',    activity:'Diehard', essences:['Life','Wood'],   armor:['Helmet'],           weapon:'G62 Staff', ring:false, heart:true,  discord:true,  ally:false },
+  { name:'Rekhar',    cls:'Commander', activity:'Diehard', essences:[],                 armor:['Gloves','Shorts'], weapon:null,        ring:true,  heart:false, discord:true,  ally:false },
+  { name:'Nyxara',    cls:'CJB',       activity:'Active',  essences:['Earth'],          armor:['Boots'],           weapon:'G62 Rod',   ring:false, heart:false, discord:true,  ally:false },
+  { name:'Zelvion',   cls:'EA',        activity:'Active',  essences:['Wood','Fire'],   armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
+  { name:'Morthex',   cls:'Vagabond',  activity:'Diehard', essences:['Iron'],           armor:['Chest'],           weapon:null,        ring:false, heart:false, discord:false, ally:false },
+  { name:'Calindra',  cls:'Hermit',    activity:'Active',  essences:[],                 armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
+  { name:'Vexor',     cls:'IC',        activity:'Diehard', essences:['Water','Earth'], armor:['Boots','Gloves'],  weapon:'G62 Bow',   ring:true,  heart:false, discord:true,  ally:false },
+  { name:'Erevan',    cls:'CJB',       activity:'Casual',  essences:['Life'],           armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:true  },
+  { name:'Thornbane', cls:'Commander', activity:'Active',  essences:[],                 armor:['Helmet'],          weapon:null,        ring:false, heart:false, discord:true,  ally:false },
+  { name:'Mistveil',  cls:'EA',        activity:'Diehard', essences:['Wood'],           armor:[],                  weapon:'G62 Bow',   ring:false, heart:false, discord:true,  ally:false },
+];
+
+const MOCK_PARTIES = [
+  { num: 1, role: 'Frontline', members: [
+    { name:'LucLK',     cls:'Commander', leader:true  },
+    { name:'Drakon',    cls:'Vagabond',  leader:false },
+    { name:'Rekhar',    cls:'Commander', leader:false },
+    { name:'Thornbane', cls:'Commander', leader:false },
+    { name:'Morthex',   cls:'Vagabond',  leader:false },
+    null, null, null
+  ]},
+  { num: 2, role: 'Support', members: [
+    { name:'Sylvara',   cls:'Hermit',    leader:true  },
+    { name:'Calindra',  cls:'Hermit',    leader:false },
+    { name:'Nyxara',    cls:'CJB',       leader:false },
+    { name:'Zelvion',   cls:'EA',        leader:false },
+    null, null, null, null
+  ]},
+  { num: 3, role: 'DPS', members: [
+    { name:'Vexor',     cls:'IC',        leader:true  },
+    { name:'Mistveil',  cls:'EA',        leader:false },
+    { name:'Erevan',    cls:'CJB',       leader:false },
+    null, null, null, null, null
+  ]},
+];
+
+/* ─────────────────────────────────────────────────────────────
+   COUNTDOWN
+   ───────────────────────────────────────────────────────────── */
+function updateCountdown() {
+  const now  = new Date();
+  // Target: next Sunday at 20:00 UTC+1 = 19:00 UTC
+  const cwHourUTC = CONFIG.CW_HOUR - CONFIG.CW_TZ_OFFSET;
+  const next = new Date(Date.UTC(
+    now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
+    cwHourUTC, CONFIG.CW_MIN, 0, 0
+  ));
+  // advance to the correct day of week
+  const daysUntil = (CONFIG.CW_DAY - next.getUTCDay() + 7) % 7;
+  next.setUTCDate(next.getUTCDate() + (daysUntil === 0 && next <= now ? 7 : daysUntil));
+  if (next <= now) next.setUTCDate(next.getUTCDate() + 7);
+
+  const diff = next - now;
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+
+  document.getElementById('cdDays').textContent  = String(d).padStart(2,'0');
+  document.getElementById('cdHours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdMins').textContent  = String(m).padStart(2,'0');
+  document.getElementById('cdSecs').textContent  = String(s).padStart(2,'0');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TABS
+   ───────────────────────────────────────────────────────────── */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FILTER
+   ───────────────────────────────────────────────────────────── */
+function setFilter(cls, btn) {
+  activeFilter = cls;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoster();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER ROSTER
+   ───────────────────────────────────────────────────────────── */
+function classInfo(cls) {
+  return CLASSES[cls] || { icon: null, emoji: '❓', color: '#888', short: cls ? cls.substring(0,3).toUpperCase() : '?', archetype: '' };
+}
+
+function classIconHTML(ci, size = 26) {
+  // Use <img> if icon path set, otherwise emoji fallback
+  if (ci.icon) {
+    return `<img src="${ci.icon}" width="${size}" height="${size}" alt="${ci.short}" style="image-rendering:pixelated;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"><span style="display:none;font-size:${Math.round(size*0.6)}px">${ci.emoji}</span>`;
+  }
+  return `<span style="font-size:${Math.round(size*0.6)}px">${ci.emoji}</span>`;
+}
+
+function renderRoster() {
+  const filtered = activeFilter === 'all'
+    ? rosterData
+    : rosterData.filter(m => m.cls === activeFilter);
+
+  const grid = document.getElementById('rosterGrid');
+  grid.innerHTML = filtered.map(m => {
+    const ci = classInfo(m.cls);
+    const actClass = m.activity === 'Diehard' ? 'act-hardcore' : m.activity === 'Active' ? 'act-active' : 'act-casual';
+    const actLabel = m.activity || 'Unknown';
+
+    const essChips   = (m.essences || []).map(e => `<span class="gear-chip gear-essence">${e}</span>`).join('');
+    const armorChips = (m.armor    || []).map(a => `<span class="gear-chip gear-armor">${a}</span>`).join('');
+    const weapChip   = m.weapon ? `<span class="gear-chip gear-weapon">${m.weapon}</span>` : '';
+    const ringChip   = m.ring   ? `<span class="gear-chip gear-ring">Ring</span>` : '';
+    const heartChip  = m.heart  ? `<span class="gear-chip gear-ring">Heart</span>` : '';
+    const hasNeeds   = essChips || armorChips || weapChip || ringChip || heartChip;
+
+    const allyBadge  = m.ally ? `<div class="member-rank">Ally</div>` : '';
+    const archetypeLabel = ci.archetype ? `<span style="opacity:0.45;font-size:0.62rem"> · ${ci.archetype}</span>` : '';
+
+    return `
+<div class="member-card" style="--class-color:${ci.color}">
+  ${allyBadge}
+  <div class="card-top">
+    <div class="class-icon">
+      ${classIconHTML(ci, 28)}
+      <span class="class-initial" style="color:${ci.color}">${ci.short}</span>
+    </div>
+    <div class="member-info">
+      <div class="member-name">${m.name}</div>
+      <div class="member-meta">
+        <span class="activity-dot ${actClass}"></span>${actLabel}${archetypeLabel}
+        ${!m.discord ? ' · <span style="color:#8b4040">No Discord</span>' : ''}
+      </div>
+    </div>
+  </div>
+  ${hasNeeds ? `<div class="gear-row">${essChips}${armorChips}${weapChip}${ringChip}${heartChip}</div>` : ''}
+</div>`;
+  }).join('');
+
+  // Update counts
+  document.getElementById('rosterCount').textContent = rosterData.filter(m=>!m.ally).length;
+
+  // Stats
+  const core = rosterData.filter(m => !m.ally);
+  document.getElementById('statTotal').textContent      = core.length;
+  document.getElementById('statHardcore').textContent   = core.filter(m => m.activity === 'Diehard').length;
+  document.getElementById('statNeedEssence').textContent= core.filter(m => m.essences && m.essences.length > 0).length;
+  document.getElementById('statNeedArmor').textContent  = core.filter(m => m.armor && m.armor.length > 0).length;
+  document.getElementById('statNeedWeapon').textContent = core.filter(m => m.weapon).length;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BUILD FILTERS
+   ───────────────────────────────────────────────────────────── */
+function buildFilters() {
+  const row = document.getElementById('filterRow');
+  const existing = Array.from(row.querySelectorAll('.filter-btn:not(:first-child), .filter-sep'));
+  existing.forEach(b => b.remove());
+
+  // Group classes by archetype
+  const archetypes = {};
+  rosterData.forEach(m => {
+    if (!m.cls) return;
+    const ci = classInfo(m.cls);
+    if (!archetypes[ci.archetype]) archetypes[ci.archetype] = [];
+    if (!archetypes[ci.archetype].includes(m.cls)) archetypes[ci.archetype].push(m.cls);
+  });
+
+  Object.entries(archetypes).forEach(([arch, classes]) => {
+    // Archetype separator label
+    const sep = document.createElement('span');
+    sep.className = 'filter-sep';
+    sep.style.cssText = 'font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);opacity:0.4;display:flex;align-items:center;padding:0 4px;';
+    sep.textContent = arch;
+    row.appendChild(sep);
+
+    classes.forEach(cls => {
+      const ci = classInfo(cls);
+      const count = rosterData.filter(m => m.cls === cls).length;
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.innerHTML = `${ci.emoji} ${cls} <span style="opacity:0.5">${count}</span>`;
+      btn.onclick = function(){ setFilter(cls, this); };
+      row.appendChild(btn);
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER PARTIES
+   ───────────────────────────────────────────────────────────── */
+function renderParties() {
+  const grid = document.getElementById('partiesGrid');
+  grid.innerHTML = partiesData.map(p => {
+    const roleClass = p.role === 'Frontline' ? 'role-frontline' : p.role === 'Support' ? 'role-support' : 'role-dps';
+    const filledCount = p.members.filter(Boolean).length;
+
+    const memberRows = p.members.map(m => {
+      if (!m) return `
+<div class="empty-slot">
+  <div class="pm-icon" style="font-size:0.7rem;color:var(--text-dim)">—</div>
+  <div class="pm-name">Empty slot</div>
+</div>`;
+      const ci = classInfo(m.cls);
+      return `
+<div class="party-member ${m.leader ? 'is-leader' : ''}">
+  <div class="pm-icon" title="${m.cls}">${classIconHTML(ci, 20)}</div>
+  <div class="pm-name">${m.name}</div>
+  <div class="pm-class">${m.cls}</div>
+  ${m.leader ? '<div class="leader-crown" title="Party Leader">👑</div>' : ''}
+</div>`;
+    }).join('');
+
+    return `
+<div class="party-card">
+  <div class="party-header">
+    <div class="party-num">Party ${p.num}</div>
+    <span class="party-role-badge ${roleClass}">${p.role}</span>
+  </div>
+  <div class="party-members">${memberRows}</div>
+</div>`;
+  }).join('');
+
+  const totalCw = partiesData.reduce((s, p) => s + p.members.filter(Boolean).length, 0);
+  document.getElementById('cwCount').textContent = totalCw;
+  document.getElementById('cwUpdated').textContent = new Date().toLocaleTimeString();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PARSE GOOGLE SHEETS DATA
+   Adapt these functions once you share your exact sheet structure
+   ───────────────────────────────────────────────────────────── */
+function parseRosterFromSheet(rows) {
+  const C = CONFIG.COL;
+  return rows
+    .filter(r => r[C.NAME] && r[C.NAME].trim())
+    .map(r => {
+      const essences = [];
+      if (r[C.ESS_FIRE]  && r[C.ESS_FIRE].toLowerCase()  === 'yes') essences.push('Fire');
+      if (r[C.ESS_WATER] && r[C.ESS_WATER].toLowerCase() === 'yes') essences.push('Water');
+      if (r[C.ESS_EARTH] && r[C.ESS_EARTH].toLowerCase() === 'yes') essences.push('Earth');
+      if (r[C.ESS_WOOD]  && r[C.ESS_WOOD].toLowerCase()  === 'yes') essences.push('Wood');
+      if (r[C.ESS_IRON]  && r[C.ESS_IRON].toLowerCase()  === 'yes') essences.push('Iron');
+      if (r[C.ESS_LIFE]  && r[C.ESS_LIFE].toLowerCase()  === 'yes') essences.push('Life');
+
+      const armor = [];
+      if (r[C.CHEST]  && r[C.CHEST].toLowerCase()  !== 'no' && r[C.CHEST])  armor.push('Chest');
+      if (r[C.SHORTS] && r[C.SHORTS].toLowerCase() !== 'no' && r[C.SHORTS]) armor.push('Shorts');
+      if (r[C.BOOTS]  && r[C.BOOTS].toLowerCase()  !== 'no' && r[C.BOOTS])  armor.push('Boots');
+      if (r[C.GLOVES] && r[C.GLOVES].toLowerCase() !== 'no' && r[C.GLOVES]) armor.push('Gloves');
+      if (r[C.HELMET] && r[C.HELMET].toLowerCase() !== 'no' && r[C.HELMET]) armor.push('Helmet');
+
+      return {
+        name:     r[C.NAME]     || '',
+        cls:      r[C.CLASS]    || '',
+        activity: r[C.ACTIVITY] || '',
+        discord:  (r[C.DISCORD] || '').toLowerCase() !== 'no',
+        ally:     (r[C.IS_ALLY] || '').toLowerCase() === 'yes',
+        essences,
+        armor,
+        weapon:   r[C.WEAPON] && r[C.WEAPON].toLowerCase() !== 'no' ? r[C.WEAPON] : null,
+        ring:     r[C.RING]   && r[C.RING].toLowerCase()   !== 'no',
+        heart:    r[C.HEART]  && r[C.HEART].toLowerCase()  !== 'no',
+      };
+    });
+}
+
+/* Party parsing — will need adapting once sheet structure is confirmed */
+function parsePartiesFromSheet(rows) {
+  // Placeholder: same as mock for now
+  return MOCK_PARTIES;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOAD DATA
+   ───────────────────────────────────────────────────────────── */
+async function loadData() {
+  document.getElementById('lastUpdated').textContent = 'refreshing…';
+  document.getElementById('cwUpdated').textContent   = 'refreshing…';
+  document.getElementById('serverName').textContent  = CONFIG.SERVER_NAME;
+
+  if (useMockData) {
+    // Demo mode
+    await new Promise(r => setTimeout(r, 400));
+    rosterData  = MOCK_ROSTER;
+    partiesData = MOCK_PARTIES;
+    document.getElementById('lastUpdated').textContent = 'demo mode — configure API key to use live data';
+    document.getElementById('cwUpdated').textContent   = 'demo mode';
+  } else {
+    try {
+      const base = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SPREADSHEET_ID}/values`;
+      const key  = `?key=${CONFIG.API_KEY}`;
+
+      const [rRes, pRes] = await Promise.all([
+        fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_ROSTER)}${key}`),
+        fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_PARTIES)}${key}`)
+      ]);
+
+      const rJson = await rRes.json();
+      const pJson = await pRes.json();
+
+      rosterData  = parseRosterFromSheet(rJson.values || []);
+      partiesData = parsePartiesFromSheet(pJson.values || []);
+
+      const ts = new Date().toLocaleTimeString();
+      document.getElementById('lastUpdated').textContent = `last refreshed ${ts}`;
+      document.getElementById('cwUpdated').textContent   = `last refreshed ${ts}`;
+    } catch(e) {
+      console.error('Failed to load sheet data:', e);
+      document.getElementById('lastUpdated').textContent = 'error loading — check console';
+    }
+  }
+
+  buildFilters();
+  renderRoster();
+  renderParties();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   INIT
+   ───────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+  loadData();
+  setInterval(loadData, 60000); // auto-refresh every 60 seconds
+});
+</script>
+</body>
+</html>
