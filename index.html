@@ -71,7 +71,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem 0 1.5rem;
+      padding: 2.5rem 0 2rem;
       border-bottom: 1px solid var(--border);
       gap: 2rem;
       flex-wrap: wrap;
@@ -84,15 +84,16 @@
     }
 
     .crest {
-      width: 56px; height: 56px;
+      width: 80px; height: 80px;
       background: radial-gradient(circle at 40% 35%, var(--gold-dim), #3a2808);
       border: 2px solid var(--gold);
-      border-radius: 4px;
+      border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      box-shadow: 0 0 20px rgba(201,168,76,0.25), inset 0 0 10px rgba(0,0,0,0.5);
+      font-size: 2.8rem;
+      box-shadow: 0 0 28px rgba(201,168,76,0.3), inset 0 0 14px rgba(0,0,0,0.5);
       transform: rotate(2deg);
       flex-shrink: 0;
+      overflow: hidden;
     }
 
     .guild-name {
@@ -267,6 +268,7 @@
       gap: 0.5rem;
       flex-wrap: wrap;
       margin-bottom: 1.5rem;
+      align-items: center;
     }
 
     .filter-btn {
@@ -286,6 +288,17 @@
 
     .filter-btn:hover, .filter-btn.active { border-color: var(--gold-dim); color: var(--gold); background: rgba(201,168,76,0.06); }
     .filter-btn.active { background: rgba(201,168,76,0.1); }
+
+    .filter-sep {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      opacity: 0.4;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+    }
 
     /* ─── ROSTER GRID ─────────────────────────────────────────── */
     .roster-grid {
@@ -322,7 +335,6 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin-bottom: 0.75rem;
     }
 
     .class-icon {
@@ -334,6 +346,7 @@
       font-size: 1.3rem;
       flex-shrink: 0;
       position: relative;
+      overflow: hidden;
     }
 
     .class-icon .class-initial {
@@ -362,55 +375,73 @@
     }
 
     .member-meta {
-      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .class-label {
+      font-size: 0.67rem;
       color: var(--text-dim);
-      margin-top: 2px;
       letter-spacing: 0.05em;
     }
 
-    .activity-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 4px;
-      vertical-align: middle;
+    .level-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.05em;
     }
 
-    .act-hardcore { background: var(--green-hi); box-shadow: 0 0 6px var(--green-hi); }
-    .act-active   { background: var(--gold); }
-    .act-casual   { background: var(--text-dim); }
-
-    /* gear needs */
-    .gear-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 0.6rem;
-    }
-
-    .gear-chip {
+    .meta-sep {
+      color: var(--text-dim);
+      opacity: 0.3;
       font-size: 0.6rem;
+    }
+
+    /* ─── BADGES — Public Notes only ────────────────────────── */
+    .badge-row {
+      display: flex;
+      gap: 5px;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 2px;
       border: 1px solid;
+      white-space: nowrap;
+      line-height: 1.5;
     }
 
-    .gear-essence { background: rgba(74,122,170,0.1); border-color: rgba(74,122,170,0.4); color: var(--blue-hi); }
-    .gear-armor   { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.3); color: var(--gold-dim); }
-    .gear-weapon  { background: rgba(139,26,26,0.12); border-color: rgba(192,40,42,0.35); color: #c08080; }
-    .gear-ring    { background: rgba(90,50,140,0.12); border-color: rgba(130,80,200,0.35); color: #b090d8; }
+    /* Public Notes badge — neutral, unobtrusive */
+    .badge-note {
+      background: rgba(212,207,196,0.06);
+      border-color: rgba(212,207,196,0.2);
+      color: var(--text-dim);
+      text-transform: none;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+      font-style: italic;
+    }
 
-    .member-rank {
-      position: absolute;
-      top: 8px; right: 10px;
+    /* ─── EE NOTE (Castle War) ───────────────────────────────── */
+    .ee-note {
       font-family: 'Cinzel', serif;
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      color: var(--gold-dim);
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--green-hi);
+      opacity: 0.75;
       text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     /* ─── STAT STRIP ─────────────────────────────────────────── */
@@ -448,6 +479,50 @@
       text-transform: uppercase;
     }
 
+    /* ─── CW ANNOUNCEMENT BANNER ─────────────────────────────── */
+    .cw-announcement {
+      display: none; /* shown by JS when content exists */
+      align-items: flex-start;
+      gap: 1rem;
+      background: linear-gradient(135deg, rgba(139,26,26,0.18) 0%, rgba(139,26,26,0.08) 100%);
+      border: 1px solid rgba(192,40,42,0.4);
+      border-left: 3px solid var(--crimson-hi);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.8rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .cw-announcement.visible { display: flex; }
+
+    .ann-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ann-body {
+      flex: 1;
+    }
+
+    .ann-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(192,40,42,0.8);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .ann-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-hi);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
     /* ─── CASTLE WAR ─────────────────────────────────────────── */
     .parties-grid {
       display: grid;
@@ -460,6 +535,12 @@
       border: 1px solid var(--border);
       border-radius: 4px;
       overflow: hidden;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .party-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 0 16px rgba(201,168,76,0.06);
     }
 
     .party-header {
@@ -471,6 +552,12 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .party-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
     .party-num {
       font-family: 'Cinzel', serif;
       font-size: 0.75rem;
@@ -480,18 +567,11 @@
       text-transform: uppercase;
     }
 
-    .party-role-badge {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 2px;
+    .party-fill {
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
     }
-
-    .role-frontline { background: rgba(139,26,26,0.2); border: 1px solid rgba(192,40,42,0.4); color: #c08080; }
-    .role-support   { background: rgba(74,122,170,0.15); border: 1px solid rgba(74,122,170,0.4); color: var(--blue-hi); }
-    .role-dps       { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-dim); }
 
     .party-members { padding: 0.5rem 0; }
 
@@ -499,24 +579,27 @@
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      padding: 0.4rem 1rem;
+      padding: 0.38rem 1rem;
       transition: background 0.15s ease;
     }
 
     .party-member:hover { background: rgba(255,255,255,0.02); }
 
     .party-member.is-leader {
-      background: rgba(201,168,76,0.04);
+      background: rgba(201,168,76,0.05);
+      border-left: 2px solid rgba(201,168,76,0.35);
+      padding-left: calc(1rem - 2px);
     }
 
     .pm-icon {
-      width: 26px; height: 26px;
+      width: 24px; height: 24px;
       background: var(--bg3);
       border: 1px solid var(--border);
       border-radius: 2px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       flex-shrink: 0;
+      overflow: hidden;
     }
 
     .pm-name {
@@ -524,32 +607,49 @@
       font-size: 0.72rem;
       color: var(--text-hi);
       flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .party-member.is-leader .pm-name {
+      color: var(--gold-hi);
     }
 
     .pm-class {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       color: var(--text-dim);
       letter-spacing: 0.06em;
     }
 
     .leader-crown {
-      font-size: 0.65rem;
-      color: var(--gold);
+      font-size: 0.6rem;
       flex-shrink: 0;
     }
-
-    .party-empty { height: 5px; } /* spacing for empty slots */
 
     .empty-slot {
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      padding: 0.4rem 1rem;
-      opacity: 0.25;
+      padding: 0.38rem 1rem;
+      opacity: 0.2;
     }
 
     .empty-slot .pm-icon { border-style: dashed; }
     .empty-slot .pm-name { font-family: 'Rajdhani', sans-serif; font-size: 0.68rem; color: var(--text-dim); font-style: italic; }
+
+    /* ─── CW STATS ROW ───────────────────────────────────────── */
+    .cw-stat-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
 
     /* ─── DATA NOTE ──────────────────────────────────────────── */
     .data-note {
@@ -569,6 +669,12 @@
       box-shadow: 0 0 6px var(--green-hi);
       flex-shrink: 0;
       animation: pulse 2s infinite;
+    }
+
+    .data-note-dot.error {
+      background: var(--crimson-hi);
+      box-shadow: 0 0 6px var(--crimson-hi);
+      animation: none;
     }
 
     @keyframes pulse {
@@ -593,24 +699,6 @@
     }
 
     .refresh-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
-
-    /* ─── CLASS LEGEND ───────────────────────────────────────── */
-    .class-legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
 
     /* ─── FOOTER ─────────────────────────────────────────────── */
     footer {
@@ -639,6 +727,44 @@
       text-transform: uppercase;
     }
 
+    /* ─── EMPTY STATE ────────────────────────────────────────── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+
+    /* ─── LOADING SHIMMER ────────────────────────────────────── */
+    .shimmer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .shimmer-card {
+      height: 76px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .shimmer-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.04) 50%, transparent 100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(100%); }
+    }
+
     /* ─── RESPONSIVE ─────────────────────────────────────────── */
     @media (max-width: 640px) {
       .guild-name h1 { font-size: 1.35rem; }
@@ -653,13 +779,14 @@
   <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
   <header>
     <div class="guild-logo">
-    <div class="crest">
-      <img src="icons/guild-logo.png" alt="FTG" style="width:44px;height:44px;object-fit:contain;image-rendering:pixelated;"
-           onerror="this.style.display='none';this.nextSibling.style.display='flex'" />
-      <span style="display:none;font-size:1.8rem;align-items:center;justify-content:center;">⚔️</span>
-    </div>
+      <div class="crest">
+        <img src="icons/guild-logo.png" alt="FTG"
+             style="width:76px;height:76px;object-fit:contain;image-rendering:pixelated;"
+             onerror="this.style.display='none';this.nextSibling.style.display='flex'" />
+        <span style="display:none;font-size:1.8rem;align-items:center;justify-content:center;">⚔️</span>
+      </div>
       <div class="guild-name">
-        <h1>ForTheGlory <span class="server-badge" id="serverName">PROJECT X</span></h1>
+        <h1>ForTheGlory <span class="server-badge" id="serverName">PROJECT BANGO</span></h1>
         <div class="tagline">Once for the Glory, Always ForTheGlory</div>
       </div>
     </div>
@@ -680,10 +807,10 @@
 
   <!-- ═══ NAVIGATION ═══════════════════════════════════════════ -->
   <nav>
-    <button class="tab-btn active" onclick="switchTab('roster')">
+    <button class="tab-btn active" onclick="switchTab('roster', this)">
       Roster <span class="tab-count" id="rosterCount">0</span>
     </button>
-    <button class="tab-btn" onclick="switchTab('castlewar')">
+    <button class="tab-btn" onclick="switchTab('castlewar', this)">
       Castle War <span class="tab-count" id="cwCount">0</span>
     </button>
   </nav>
@@ -692,18 +819,15 @@
   <div class="tab-panel active" id="panel-roster">
 
     <div class="data-note">
-      <div class="data-note-dot"></div>
-      <span>Live from Google Sheets — <span id="lastUpdated">loading...</span></span>
+      <div class="data-note-dot" id="rosterDot"></div>
+      <span>Live from Google Sheets — <span id="lastUpdated">loading…</span></span>
       <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
     </div>
 
-    <!-- Stats -->
+    <!-- Stats strip -->
     <div class="stat-strip" id="statStrip">
       <div class="stat-cell"><div class="stat-val" id="statTotal">—</div><div class="stat-lbl">Members</div></div>
-      <div class="stat-cell"><div class="stat-val" id="statHardcore">—</div><div class="stat-lbl">Diehard</div></div>
-      <div class="stat-cell"><div class="stat-val" id="statNeedEssence">—</div><div class="stat-lbl">Commy Network</div></div>
-      <div class="stat-cell"><div class="stat-val" id="statNeedArmor">—</div><div class="stat-lbl">Need G60 Armor</div></div>
-      <div class="stat-cell"><div class="stat-val" id="statNeedWeapon">—</div><div class="stat-lbl">Need G62 Weapon</div></div>
+      <div class="stat-cell"><div class="stat-val" id="statAvgLevel">—</div><div class="stat-lbl">Avg Level</div></div>
     </div>
 
     <!-- Filters -->
@@ -713,8 +837,14 @@
     </div>
 
     <!-- Grid -->
-    <div class="roster-grid" id="rosterGrid">
-      <!-- member cards injected by JS -->
+    <div id="rosterGrid">
+      <!-- shimmer placeholders while loading -->
+      <div class="shimmer-grid" id="rosterShimmer">
+        <div class="shimmer-card"></div><div class="shimmer-card"></div>
+        <div class="shimmer-card"></div><div class="shimmer-card"></div>
+        <div class="shimmer-card"></div><div class="shimmer-card"></div>
+      </div>
+      <div class="roster-grid" id="rosterCards" style="display:none"></div>
     </div>
   </div>
 
@@ -722,9 +852,25 @@
   <div class="tab-panel" id="panel-castlewar">
 
     <div class="data-note">
-      <div class="data-note-dot"></div>
-      <span>Party compositions — <span id="cwUpdated">loading...</span></span>
+      <div class="data-note-dot" id="cwDot"></div>
+      <span>Party compositions — <span id="cwUpdated">loading…</span></span>
       <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    </div>
+
+    <!-- Announcement banner (shown only when cell has content) -->
+    <div class="cw-announcement" id="cwAnnouncement">
+      <div class="ann-icon">📢</div>
+      <div class="ann-body">
+        <div class="ann-label">Council Announcement</div>
+        <div class="ann-text" id="cwAnnouncementText"></div>
+      </div>
+    </div>
+
+    <!-- CW stats -->
+    <div class="stat-strip cw-stat-strip">
+      <div class="stat-cell"><div class="stat-val" id="cwStatParties">—</div><div class="stat-lbl">Active Parties</div></div>
+      <div class="stat-cell"><div class="stat-val" id="cwStatPlayers">—</div><div class="stat-lbl">Deployed Players</div></div>
+      <div class="stat-cell"><div class="stat-val" id="cwStatFull">—</div><div class="stat-lbl">Full Parties</div></div>
     </div>
 
     <div class="parties-grid" id="partiesGrid">
@@ -743,131 +889,441 @@
 <!-- ═══ SCRIPTS ═══════════════════════════════════════════════ -->
 <script>
 /* ─────────────────────────────────────────────────────────────
-   CONFIG — replace these values before deploying
+   CONFIG
+   ─────────────────────────────────────────────────────────────
+   Replace API_KEY with your Google Sheets API key.
+   Both sheet IDs and named ranges are already set to match
+   your live sheets exactly.
    ───────────────────────────────────────────────────────────── */
 const CONFIG = {
-  // Google Sheets API
-  API_KEY:        'YOUR_GOOGLE_API_KEY',
-  SPREADSHEET_ID: 'YOUR_SPREADSHEET_ID',
-  RANGE_ROSTER:   'Server plan!A2:Z200',   // adjust sheet name if needed
-  RANGE_PARTIES:  'Guild Status!A1:J100',  // adjust sheet name if needed
+  API_KEY: 'AIzaSyCeKJ_v8TNRcaZwCDUyD2FwlPSdPF0vV-o',   // ← only thing you need to fill in
 
-  // Server settings
-  SERVER_NAME: 'PROJECT X',
+  // FTG Council sheet (roster + parties)
+  COUNCIL_SHEET_ID: '1U2A8ujYYZoAQ3501PcVEaiHB3ma4NmqkLAzAiJ4n_SQ',
 
-  // Castle War day/time (0=Sun, 1=Mon, ... 6=Sat)
-  CW_DAY:  0,    // Sunday
-  CW_HOUR: 20,   // 20:00 UTC+1
+  // Named ranges (already defined in the sheet)
+  RANGE_ROSTER:       'Roster_Data',       // 'Master Roster'!A3:G200  → Name, Level, Class, Intensive, Council Notes, Public Notes, Stability
+  RANGE_ANNOUNCEMENT: 'CW_Announcement',   // single cell free text
+
+  // Party named ranges Party_1 through Party_12
+  // Each is 2 cols × 8 rows: col0 = Name, col1 = Class (auto-VLOOKUP)
+  PARTY_COUNT: 12,
+
+  // Server display name (shown in header badge)
+  SERVER_NAME: 'PROJECT BANGO',
+
+  // Castle War schedule
+  // Day: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+  CW_DAY:  0,
+  CW_HOUR: 20,   // local hour
   CW_MIN:  0,
-  CW_TZ_OFFSET: 1, // UTC+1
+  CW_TZ_OFFSET: 1,  // UTC+1
 
-  // Column indices in "Server plan" sheet (0-based)
-  // Adjust if your sheet columns are in a different order
+  // Column indices in Roster_Data (0-based)
   COL: {
-    NAME:      0,
-    CLASS:     1,
-    ACTIVITY:  3,   // "Server Start Plan" (Hardcore / Active / Casual)
-    DISCORD:   5,
-    IS_ALLY:   6,
-    NEED:      7,   // "Do you need something?" free text
-    ESS_FIRE:  8,
-    ESS_WATER: 9,
-    ESS_EARTH: 10,
-    ESS_WOOD:  11,
-    ESS_IRON:  12,
-    ESS_LIFE:  13,
-    HEART:     14,
-    RING:      15,
-    WEAPON:    16,  // G62 weapon type
-    CHEST:     17,
-    SHORTS:    18,
-    BOOTS:     19,
-    GLOVES:    20,
-    HELMET:    21,
+    NAME:         0,  // A — Character Name
+    LEVEL:        1,  // B — Level
+    CLASS:        2,  // C — Class
+    INTENSIVE:    3,  // D — Intensive (council only — not displayed)
+    COUNCIL_NOTES:4,  // E — Council Notes (council only — not displayed)
+    PUBLIC_NOTES: 5,  // F — Public Notes (shown on website)
+    STABILITY:    6,  // G — Stability (council only — not displayed)
   }
 };
 
 /* ─────────────────────────────────────────────────────────────
    CLASS DEFINITIONS
-   6 classes across 3 archetypes.
-   icons: <img> tags pointing to /icons/<filename>.png once you have the sprites.
-   For now using styled text badges as placeholders — swap icon field to
-   an <img> tag when you drop the real assets into the /icons/ folder.
+   icon      — used everywhere (roster cards, filter buttons, party rows)
+   cwIcon    — Castle War override icon (used only in party rendering)
+               Set per-member dynamically based on class + level thresholds:
+               Hermit ≥ 65 → hermitstorm.jpg
+               EA     ≥ 59 → eaee.jpg
    ───────────────────────────────────────────────────────────── */
 const CLASSES = {
-  // Knight archetype
-  'Commander': { icon: 'icons/commander.png', emoji: '⚔️', color: '#c0282a', short: 'CMD', archetype: 'Knight' },
-  'Vagabond':  { icon: 'icons/vagabond.jpg',  emoji: '🗡️', color: '#e07040', short: 'VAG', archetype: 'Knight' },
-  // Archer archetype
-  'EA':        { icon: 'icons/ea.png',         emoji: '🏹', color: '#58b36a', short: 'EA',  archetype: 'Archer' },
-  'IC':        { icon: 'icons/ic.png',         emoji: '🌿', color: '#3a9a5a', short: 'IC',  archetype: 'Archer' },
-  // Mage archetype
-  'Hermit':    { icon: 'icons/hermit.png',     emoji: '🔮', color: '#7a7ae8', short: 'HRM', archetype: 'Mage'   },
-  'CJB':       { icon: 'icons/cjb.png',        emoji: '✨', color: '#c9a84c', short: 'CJB', archetype: 'Mage'   },
+  'Commander': { icon: 'icons/commander.jpg', color: '#c0282a', short: 'CMD', archetype: 'Knight' },
+  'Vagabond':  { icon: 'icons/vagabond.jpg',  color: '#e07040', short: 'VAG', archetype: 'Knight' },
+  'EA':        { icon: 'icons/ea.jpg',         color: '#58b36a', short: 'EA',  archetype: 'Archer' },
+  'IC':        { icon: 'icons/ic.jpg',         color: '#3a9a5a', short: 'IC',  archetype: 'Archer' },
+  'Hermit':    { icon: 'icons/hermit.jpg',     color: '#7a7ae8', short: 'HRM', archetype: 'Mage'   },
+  'CJB':       { icon: 'icons/cjb.jpg',        color: '#c9a84c', short: 'CJB', archetype: 'Mage'   },
 };
+
+/* Castle War icon overrides based on class + level */
+function cwIconPath(cls, level) {
+  const lvl = parseInt(level) || 0;
+  if (cls === 'Hermit' && lvl >= 65) return 'icons/hermitstorm.jpg';
+  if (cls === 'EA'     && lvl >= 59) return 'icons/eaee.jpg';
+  return null; // use default class icon
+}
 
 /* ─────────────────────────────────────────────────────────────
    STATE
    ───────────────────────────────────────────────────────────── */
-let rosterData   = [];
-let partiesData  = [];
-let activeFilter = 'all';
-let useMockData  = (CONFIG.API_KEY === 'YOUR_GOOGLE_API_KEY');
+let rosterData    = [];
+let partiesData   = [];
+let activeFilter  = 'all';
+const useMockData = (CONFIG.API_KEY === 'YOUR_GOOGLE_API_KEY');
 
 /* ─────────────────────────────────────────────────────────────
-   MOCK DATA (used when no API key is configured)
+   MOCK DATA (demo mode when no API key configured)
    ───────────────────────────────────────────────────────────── */
 const MOCK_ROSTER = [
-  { name:'LucLK',     cls:'Commander', activity:'Diehard', essences:['Fire','Iron'],   armor:['Chest','Boots'],   weapon:'G62 Sword', ring:true,  heart:false, discord:true,  ally:false },
-  { name:'Drakon',    cls:'Vagabond',  activity:'Diehard', essences:['Water'],          armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
-  { name:'Sylvara',   cls:'Hermit',    activity:'Diehard', essences:['Life','Wood'],   armor:['Helmet'],           weapon:'G62 Staff', ring:false, heart:true,  discord:true,  ally:false },
-  { name:'Rekhar',    cls:'Commander', activity:'Diehard', essences:[],                 armor:['Gloves','Shorts'], weapon:null,        ring:true,  heart:false, discord:true,  ally:false },
-  { name:'Nyxara',    cls:'CJB',       activity:'Active',  essences:['Earth'],          armor:['Boots'],           weapon:'G62 Rod',   ring:false, heart:false, discord:true,  ally:false },
-  { name:'Zelvion',   cls:'EA',        activity:'Active',  essences:['Wood','Fire'],   armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
-  { name:'Morthex',   cls:'Vagabond',  activity:'Diehard', essences:['Iron'],           armor:['Chest'],           weapon:null,        ring:false, heart:false, discord:false, ally:false },
-  { name:'Calindra',  cls:'Hermit',    activity:'Active',  essences:[],                 armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:false },
-  { name:'Vexor',     cls:'IC',        activity:'Diehard', essences:['Water','Earth'], armor:['Boots','Gloves'],  weapon:'G62 Bow',   ring:true,  heart:false, discord:true,  ally:false },
-  { name:'Erevan',    cls:'CJB',       activity:'Casual',  essences:['Life'],           armor:[],                  weapon:null,        ring:false, heart:false, discord:true,  ally:true  },
-  { name:'Thornbane', cls:'Commander', activity:'Active',  essences:[],                 armor:['Helmet'],          weapon:null,        ring:false, heart:false, discord:true,  ally:false },
-  { name:'Mistveil',  cls:'EA',        activity:'Diehard', essences:['Wood'],           armor:[],                  weapon:'G62 Bow',   ring:false, heart:false, discord:true,  ally:false },
+  { name:'LucLK',     level:'62', cls:'Commander', publicNotes:'' },
+  { name:'Drakon',    level:'60', cls:'Vagabond',  publicNotes:'' },
+  { name:'Sylvara',   level:'65', cls:'Hermit',    publicNotes:'Main healer' },
+  { name:'Rekhar',    level:'58', cls:'Commander', publicNotes:'' },
+  { name:'Nyxara',    level:'56', cls:'CJB',       publicNotes:'' },
+  { name:'Zelvion',   level:'59', cls:'EA',        publicNotes:'' },
+  { name:'Morthex',   level:'62', cls:'Vagabond',  publicNotes:'' },
+  { name:'Calindra',  level:'54', cls:'Hermit',    publicNotes:'On trial' },
+  { name:'Vexor',     level:'60', cls:'IC',        publicNotes:'' },
+  { name:'Thornbane', level:'56', cls:'Commander', publicNotes:'' },
+  { name:'Mistveil',  level:'62', cls:'EA',        publicNotes:'' },
+  { name:'Elyndra',   level:'59', cls:'EA',        publicNotes:'' },
 ];
 
 const MOCK_PARTIES = [
-  { num: 1, role: 'Frontline', members: [
-    { name:'LucLK',     cls:'Commander', leader:true  },
-    { name:'Drakon',    cls:'Vagabond',  leader:false },
-    { name:'Rekhar',    cls:'Commander', leader:false },
-    { name:'Thornbane', cls:'Commander', leader:false },
-    { name:'Morthex',   cls:'Vagabond',  leader:false },
+  { num:1, members:[
+    { name:'LucLK',     cls:'Commander', level:'62', leader:true  },
+    { name:'Drakon',    cls:'Vagabond',  level:'60', leader:false },
+    { name:'Rekhar',    cls:'Commander', level:'58', leader:false },
+    { name:'Thornbane', cls:'Commander', level:'56', leader:false },
+    { name:'Morthex',   cls:'Vagabond',  level:'62', leader:false },
     null, null, null
   ]},
-  { num: 2, role: 'Support', members: [
-    { name:'Sylvara',   cls:'Hermit',    leader:true  },
-    { name:'Calindra',  cls:'Hermit',    leader:false },
-    { name:'Nyxara',    cls:'CJB',       leader:false },
-    { name:'Zelvion',   cls:'EA',        leader:false },
-    null, null, null, null
+  { num:2, members:[
+    { name:'Sylvara',   cls:'Hermit',    level:'65', leader:true  },
+    { name:'Calindra',  cls:'Hermit',    level:'54', leader:false },
+    { name:'Nyxara',    cls:'CJB',       level:'56', leader:false },
+    { name:'Elyndra',   cls:'EA',        level:'59', leader:false },
+    { name:'Zelvion',   cls:'EA',        level:'59', leader:false },
+    null, null, null
   ]},
-  { num: 3, role: 'DPS', members: [
-    { name:'Vexor',     cls:'IC',        leader:true  },
-    { name:'Mistveil',  cls:'EA',        leader:false },
-    { name:'Erevan',    cls:'CJB',       leader:false },
-    null, null, null, null, null
+  { num:3, members:[
+    { name:'Vexor',     cls:'IC',        level:'60', leader:true  },
+    { name:'Mistveil',  cls:'EA',        level:'62', leader:false },
+    null, null, null, null, null, null
   ]},
 ];
+
+const MOCK_ANNOUNCEMENT = 'Castle War this Sunday 20:00 UTC+1. All members report to Castle Town by 19:45. Primary target: Altar Castle. Full formation required — check party assignments below.';
+
+/* ─────────────────────────────────────────────────────────────
+   HELPERS
+   ───────────────────────────────────────────────────────────── */
+function classInfo(cls) {
+  return CLASSES[cls] || { icon: null, color: '#888', short: cls ? cls.substring(0,3).toUpperCase() : '?', archetype: '' };
+}
+
+/* Renders a class icon img. Falls back to short text if img missing.
+   Pass overrideIcon to use a different image path (e.g. cwIconPath result). */
+function classIconHTML(ci, size = 24, overrideIcon = null) {
+  const src = overrideIcon || ci.icon;
+  if (src) {
+    return `<img src="${src}" width="${size}" height="${size}" alt="${ci.short}"
+              style="image-rendering:pixelated;object-fit:contain;"
+              onerror="this.style.display='none';this.nextSibling.style.display='inline'"><span style="display:none;font-size:${Math.round(size*0.55)}px;font-family:'Cinzel',serif;color:${ci.color}">${ci.short}</span>`;
+  }
+  return `<span style="font-size:${Math.round(size*0.55)}px;font-family:'Cinzel',serif;color:${ci.color}">${ci.short}</span>`;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PARSE GOOGLE SHEETS ROWS → internal data objects
+   Only Public Notes (col F) is surfaced — Intensive, Council Notes,
+   and Stability are read from the sheet but not stored/displayed.
+   ───────────────────────────────────────────────────────────── */
+function parseRosterFromSheet(rows) {
+  const C = CONFIG.COL;
+  return rows
+    .filter(r => r[C.NAME] && r[C.NAME].trim())
+    .map(r => ({
+      name:        (r[C.NAME]         || '').trim(),
+      level:       (r[C.LEVEL]        || '').trim(),
+      cls:         (r[C.CLASS]        || '').trim(),
+      publicNotes: (r[C.PUBLIC_NOTES] || '').trim(),
+    }));
+}
+
+function parsePartiesFromSheet(allParties) {
+  // allParties is an array of 12 raw value arrays (one per party named range)
+  // Each is 2 cols × up to 8 rows: col0=Name, col1=Class (auto-VLOOKUP)
+  // We cross-reference rosterData to get level for CW icon logic.
+  return allParties
+    .map((rows, idx) => {
+      if (!rows || rows.length === 0) return null;
+
+      const members = rows.slice(0, 8).map((r, rowIdx) => {
+        const name = (r[0] || '').trim();
+        if (!name) return null;
+        const cls = (r[1] || '').trim();
+        // Look up level from roster so we can apply CW icon thresholds
+        const rosterEntry = rosterData.find(m => m.name === name);
+        const level = rosterEntry ? rosterEntry.level : '';
+        return { name, cls, level, leader: rowIdx === 0 };
+      });
+
+      const hasAnyone = members.some(Boolean);
+      if (!hasAnyone) return null;
+
+      return { num: idx + 1, members };
+    })
+    .filter(Boolean);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER ROSTER
+   ───────────────────────────────────────────────────────────── */
+function renderRoster() {
+  const filtered = activeFilter === 'all'
+    ? rosterData
+    : rosterData.filter(m => m.cls === activeFilter);
+
+  const cards = document.getElementById('rosterCards');
+  const shimmer = document.getElementById('rosterShimmer');
+  shimmer.style.display = 'none';
+  cards.style.display = '';
+
+  if (filtered.length === 0) {
+    cards.innerHTML = '<div class="empty-state">No members found.</div>';
+    return;
+  }
+
+  cards.innerHTML = filtered.map(m => {
+    const ci = classInfo(m.cls);
+    const notesBadge = m.publicNotes
+      ? `<div class="badge-row"><span class="badge badge-note">${m.publicNotes}</span></div>`
+      : '';
+    const levelStr = m.level ? `<span class="level-label">${m.level}</span>` : '';
+
+    return `
+<div class="member-card" style="--class-color:${ci.color}">
+  <div class="card-top">
+    <div class="class-icon">
+      ${classIconHTML(ci, 28)}
+      <span class="class-initial" style="color:${ci.color}">${ci.short}</span>
+    </div>
+    <div class="member-info">
+      <div class="member-name">${m.name}</div>
+      <div class="member-meta">
+        <span class="class-label">${m.cls || '—'}</span>
+        ${m.level ? `<span class="meta-sep">·</span>${levelStr}` : ''}
+      </div>
+    </div>
+  </div>
+  ${notesBadge}
+</div>`;
+  }).join('');
+
+  // Tab count
+  document.getElementById('rosterCount').textContent = rosterData.length;
+
+  // Stats — Members total + Level average (only members with a level)
+  document.getElementById('statTotal').textContent = rosterData.length;
+  const levelled = rosterData.map(m => parseInt(m.level)).filter(n => !isNaN(n) && n > 0);
+  const avgLevel = levelled.length
+    ? (levelled.reduce((a, b) => a + b, 0) / levelled.length).toFixed(1)
+    : '—';
+  document.getElementById('statAvgLevel').textContent = levelled.length ? avgLevel : '—';
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BUILD FILTERS
+   ───────────────────────────────────────────────────────────── */
+function buildFilters() {
+  const row = document.getElementById('filterRow');
+  // Remove all except the "All" button
+  Array.from(row.querySelectorAll('.filter-btn:not(:first-child), .filter-sep'))
+       .forEach(el => el.remove());
+
+  // Group classes by archetype, in the order they appear in the roster
+  const archetypes = {};
+  const archetypeOrder = [];
+  rosterData.forEach(m => {
+    if (!m.cls) return;
+    const ci = classInfo(m.cls);
+    const arch = ci.archetype || 'Other';
+    if (!archetypes[arch]) { archetypes[arch] = []; archetypeOrder.push(arch); }
+    if (!archetypes[arch].includes(m.cls)) archetypes[arch].push(m.cls);
+  });
+
+  archetypeOrder.forEach(arch => {
+    const sep = document.createElement('span');
+    sep.className = 'filter-sep';
+    sep.textContent = arch;
+    row.appendChild(sep);
+
+    archetypes[arch].forEach(cls => {
+      const ci = classInfo(cls);
+      const count = rosterData.filter(m => m.cls === cls).length;
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      // Small icon + class name; falls back to short text if icon missing
+      const iconEl = ci.icon
+        ? `<img src="${ci.icon}" width="14" height="14" alt="${ci.short}" style="image-rendering:pixelated;object-fit:contain;vertical-align:middle;margin-right:4px;" onerror="this.style.display='none'">`
+        : `<span style="font-family:'Cinzel',serif;font-size:0.6rem;color:${ci.color};margin-right:4px">${ci.short}</span>`;
+      btn.innerHTML = `${iconEl}${cls} <span style="opacity:0.5">${count}</span>`;
+      btn.onclick = function() { setFilter(cls, this); };
+      row.appendChild(btn);
+    });
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RENDER PARTIES
+   ───────────────────────────────────────────────────────────── */
+function renderParties(announcement) {
+  // Announcement banner
+  const ann = document.getElementById('cwAnnouncement');
+  const annText = document.getElementById('cwAnnouncementText');
+  const text = (announcement || '').trim();
+  if (text) {
+    annText.textContent = text;
+    ann.classList.add('visible');
+  } else {
+    ann.classList.remove('visible');
+  }
+
+  const grid = document.getElementById('partiesGrid');
+
+  if (partiesData.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No active parties configured.</div>';
+    document.getElementById('cwCount').textContent = 0;
+    document.getElementById('cwStatParties').textContent = 0;
+    document.getElementById('cwStatPlayers').textContent = 0;
+    document.getElementById('cwStatFull').textContent = 0;
+    return;
+  }
+
+  const ordinal = n => ['1st','2nd','3rd'][n] || `${n+1}th`;
+
+  grid.innerHTML = partiesData.map(p => {
+    const filledCount = p.members.filter(Boolean).length;
+    const isFull = filledCount === 8;
+
+    // Count EEs within this party (top to bottom) for ordinal labelling
+    let eeCounter = 0;
+
+    const memberRows = p.members.map(m => {
+      if (!m) return `
+<div class="empty-slot">
+  <div class="pm-icon" style="border-style:dashed;"></div>
+  <div class="pm-name" style="font-family:'Rajdhani',sans-serif;font-size:0.68rem;font-style:italic;">Empty slot</div>
+</div>`;
+
+      const ci = classInfo(m.cls);
+      const override = cwIconPath(m.cls, m.level);
+      const iconHTML = classIconHTML(ci, 18, override);
+
+      // EE note: EA ≥ 59
+      const isEE = (m.cls === 'EA' && parseInt(m.level) >= 59);
+      const eeNote = isEE
+        ? `<span class="ee-note">${ordinal(eeCounter++)} EE</span>`
+        : '';
+
+      return `
+<div class="party-member ${m.leader ? 'is-leader' : ''}">
+  <div class="pm-icon" title="${m.cls}${m.level ? ' Lv'+m.level : ''}">${iconHTML}</div>
+  <div class="pm-name">${m.name}</div>
+  <div class="pm-class" style="color:${ci.color};opacity:0.8">${m.cls}</div>
+  ${eeNote}
+  ${m.leader ? '<div class="leader-crown" title="Party Leader">👑</div>' : ''}
+</div>`;
+    }).join('');
+
+    return `
+<div class="party-card">
+  <div class="party-header">
+    <div class="party-header-left">
+      <div class="party-num">Party ${p.num}</div>
+      <div class="party-fill" style="opacity:0.5">${filledCount}/8${isFull ? ' ✓' : ''}</div>
+    </div>
+  </div>
+  <div class="party-members">${memberRows}</div>
+</div>`;
+  }).join('');
+
+  // Stats
+  const totalPlayers = partiesData.reduce((s, p) => s + p.members.filter(Boolean).length, 0);
+  const fullParties   = partiesData.filter(p => p.members.filter(Boolean).length === 8).length;
+  document.getElementById('cwCount').textContent       = totalPlayers;
+  document.getElementById('cwStatParties').textContent = partiesData.length;
+  document.getElementById('cwStatPlayers').textContent = totalPlayers;
+  document.getElementById('cwStatFull').textContent    = fullParties;
+  document.getElementById('cwUpdated').textContent     = `last refreshed ${new Date().toLocaleTimeString()}`;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   LOAD DATA
+   ───────────────────────────────────────────────────────────── */
+async function loadData() {
+  document.getElementById('lastUpdated').textContent = 'refreshing…';
+  document.getElementById('serverName').textContent  = CONFIG.SERVER_NAME;
+
+  if (useMockData) {
+    await new Promise(r => setTimeout(r, 500));
+    rosterData  = MOCK_ROSTER;
+    partiesData = MOCK_PARTIES;
+    document.getElementById('lastUpdated').textContent = 'demo mode — add API key to use live data';
+    buildFilters();
+    renderRoster();
+    renderParties(MOCK_ANNOUNCEMENT);
+    return;
+  }
+
+  try {
+    const base = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.COUNCIL_SHEET_ID}/values`;
+    const key  = `?key=${CONFIG.API_KEY}`;
+
+    // Fetch Roster_Data + CW_Announcement in parallel
+    // Parties are fetched individually (Party_1 … Party_12)
+    const partyFetches = Array.from({ length: CONFIG.PARTY_COUNT }, (_, i) =>
+      fetch(`${base}/${encodeURIComponent('Party_' + (i + 1))}${key}`)
+    );
+
+    const [rRes, annRes, ...pResponses] = await Promise.all([
+      fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_ROSTER)}${key}`),
+      fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_ANNOUNCEMENT)}${key}`),
+      ...partyFetches
+    ]);
+
+    const rJson   = await rRes.json();
+    const annJson = await annRes.json();
+    const pJsons  = await Promise.all(pResponses.map(r => r.json()));
+
+    rosterData  = parseRosterFromSheet(rJson.values || []);
+    partiesData = parsePartiesFromSheet(pJsons.map(j => j.values || []));
+
+    // CW_Announcement is a single cell: values[0][0]
+    const announcement = ((annJson.values || [])[0] || [])[0] || '';
+
+    document.getElementById('lastUpdated').textContent = `last refreshed ${new Date().toLocaleTimeString()}`;
+    document.getElementById('rosterDot').classList.remove('error');
+    document.getElementById('cwDot').classList.remove('error');
+
+    buildFilters();
+    renderRoster();
+    renderParties(announcement);
+
+  } catch(e) {
+    console.error('FTG Hub: failed to load sheet data:', e);
+    document.getElementById('lastUpdated').textContent = 'error loading data — check console';
+    document.getElementById('rosterDot').classList.add('error');
+    document.getElementById('cwDot').classList.add('error');
+  }
+}
 
 /* ─────────────────────────────────────────────────────────────
    COUNTDOWN
    ───────────────────────────────────────────────────────────── */
 function updateCountdown() {
-  const now  = new Date();
-  // Target: next Sunday at 20:00 UTC+1 = 19:00 UTC
+  const now = new Date();
   const cwHourUTC = CONFIG.CW_HOUR - CONFIG.CW_TZ_OFFSET;
+
   const next = new Date(Date.UTC(
     now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
     cwHourUTC, CONFIG.CW_MIN, 0, 0
   ));
-  // advance to the correct day of week
+
   const daysUntil = (CONFIG.CW_DAY - next.getUTCDay() + 7) % 7;
   next.setUTCDate(next.getUTCDate() + (daysUntil === 0 && next <= now ? 7 : daysUntil));
   if (next <= now) next.setUTCDate(next.getUTCDate() + 7);
@@ -887,11 +1343,11 @@ function updateCountdown() {
 /* ─────────────────────────────────────────────────────────────
    TABS
    ───────────────────────────────────────────────────────────── */
-function switchTab(tab) {
+function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + tab).classList.add('active');
-  event.currentTarget.classList.add('active');
+  btn.classList.add('active');
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -905,248 +1361,13 @@ function setFilter(cls, btn) {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   RENDER ROSTER
-   ───────────────────────────────────────────────────────────── */
-function classInfo(cls) {
-  return CLASSES[cls] || { icon: null, emoji: '❓', color: '#888', short: cls ? cls.substring(0,3).toUpperCase() : '?', archetype: '' };
-}
-
-function classIconHTML(ci, size = 26) {
-  // Use <img> if icon path set, otherwise emoji fallback
-  if (ci.icon) {
-    return `<img src="${ci.icon}" width="${size}" height="${size}" alt="${ci.short}" style="image-rendering:pixelated;object-fit:contain;" onerror="this.style.display='none';this.nextSibling.style.display='inline'"><span style="display:none;font-size:${Math.round(size*0.6)}px">${ci.emoji}</span>`;
-  }
-  return `<span style="font-size:${Math.round(size*0.6)}px">${ci.emoji}</span>`;
-}
-
-function renderRoster() {
-  const filtered = activeFilter === 'all'
-    ? rosterData
-    : rosterData.filter(m => m.cls === activeFilter);
-
-  const grid = document.getElementById('rosterGrid');
-  grid.innerHTML = filtered.map(m => {
-    const ci = classInfo(m.cls);
-    const actClass = m.activity === 'Diehard' ? 'act-hardcore' : m.activity === 'Active' ? 'act-active' : 'act-casual';
-    const actLabel = m.activity || 'Unknown';
-
-    const essChips   = (m.essences || []).map(e => `<span class="gear-chip gear-essence">${e}</span>`).join('');
-    const armorChips = (m.armor    || []).map(a => `<span class="gear-chip gear-armor">${a}</span>`).join('');
-    const weapChip   = m.weapon ? `<span class="gear-chip gear-weapon">${m.weapon}</span>` : '';
-    const ringChip   = m.ring   ? `<span class="gear-chip gear-ring">Ring</span>` : '';
-    const heartChip  = m.heart  ? `<span class="gear-chip gear-ring">Heart</span>` : '';
-    const hasNeeds   = essChips || armorChips || weapChip || ringChip || heartChip;
-
-    const allyBadge  = m.ally ? `<div class="member-rank">Ally</div>` : '';
-    const archetypeLabel = ci.archetype ? `<span style="opacity:0.45;font-size:0.62rem"> · ${ci.archetype}</span>` : '';
-
-    return `
-<div class="member-card" style="--class-color:${ci.color}">
-  ${allyBadge}
-  <div class="card-top">
-    <div class="class-icon">
-      ${classIconHTML(ci, 28)}
-      <span class="class-initial" style="color:${ci.color}">${ci.short}</span>
-    </div>
-    <div class="member-info">
-      <div class="member-name">${m.name}</div>
-      <div class="member-meta">
-        <span class="activity-dot ${actClass}"></span>${actLabel}${archetypeLabel}
-        ${!m.discord ? ' · <span style="color:#8b4040">No Discord</span>' : ''}
-      </div>
-    </div>
-  </div>
-  ${hasNeeds ? `<div class="gear-row">${essChips}${armorChips}${weapChip}${ringChip}${heartChip}</div>` : ''}
-</div>`;
-  }).join('');
-
-  // Update counts
-  document.getElementById('rosterCount').textContent = rosterData.filter(m=>!m.ally).length;
-
-  // Stats
-  const core = rosterData.filter(m => !m.ally);
-  document.getElementById('statTotal').textContent      = core.length;
-  document.getElementById('statHardcore').textContent   = core.filter(m => m.activity === 'Diehard').length;
-  document.getElementById('statNeedEssence').textContent= core.filter(m => m.essences && m.essences.length > 0).length;
-  document.getElementById('statNeedArmor').textContent  = core.filter(m => m.armor && m.armor.length > 0).length;
-  document.getElementById('statNeedWeapon').textContent = core.filter(m => m.weapon).length;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   BUILD FILTERS
-   ───────────────────────────────────────────────────────────── */
-function buildFilters() {
-  const row = document.getElementById('filterRow');
-  const existing = Array.from(row.querySelectorAll('.filter-btn:not(:first-child), .filter-sep'));
-  existing.forEach(b => b.remove());
-
-  // Group classes by archetype
-  const archetypes = {};
-  rosterData.forEach(m => {
-    if (!m.cls) return;
-    const ci = classInfo(m.cls);
-    if (!archetypes[ci.archetype]) archetypes[ci.archetype] = [];
-    if (!archetypes[ci.archetype].includes(m.cls)) archetypes[ci.archetype].push(m.cls);
-  });
-
-  Object.entries(archetypes).forEach(([arch, classes]) => {
-    // Archetype separator label
-    const sep = document.createElement('span');
-    sep.className = 'filter-sep';
-    sep.style.cssText = 'font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);opacity:0.4;display:flex;align-items:center;padding:0 4px;';
-    sep.textContent = arch;
-    row.appendChild(sep);
-
-    classes.forEach(cls => {
-      const ci = classInfo(cls);
-      const count = rosterData.filter(m => m.cls === cls).length;
-      const btn = document.createElement('button');
-      btn.className = 'filter-btn';
-      btn.innerHTML = `${ci.emoji} ${cls} <span style="opacity:0.5">${count}</span>`;
-      btn.onclick = function(){ setFilter(cls, this); };
-      row.appendChild(btn);
-    });
-  });
-}
-
-/* ─────────────────────────────────────────────────────────────
-   RENDER PARTIES
-   ───────────────────────────────────────────────────────────── */
-function renderParties() {
-  const grid = document.getElementById('partiesGrid');
-  grid.innerHTML = partiesData.map(p => {
-    const roleClass = p.role === 'Frontline' ? 'role-frontline' : p.role === 'Support' ? 'role-support' : 'role-dps';
-    const filledCount = p.members.filter(Boolean).length;
-
-    const memberRows = p.members.map(m => {
-      if (!m) return `
-<div class="empty-slot">
-  <div class="pm-icon" style="font-size:0.7rem;color:var(--text-dim)">—</div>
-  <div class="pm-name">Empty slot</div>
-</div>`;
-      const ci = classInfo(m.cls);
-      return `
-<div class="party-member ${m.leader ? 'is-leader' : ''}">
-  <div class="pm-icon" title="${m.cls}">${classIconHTML(ci, 20)}</div>
-  <div class="pm-name">${m.name}</div>
-  <div class="pm-class">${m.cls}</div>
-  ${m.leader ? '<div class="leader-crown" title="Party Leader">👑</div>' : ''}
-</div>`;
-    }).join('');
-
-    return `
-<div class="party-card">
-  <div class="party-header">
-    <div class="party-num">Party ${p.num}</div>
-    <span class="party-role-badge ${roleClass}">${p.role}</span>
-  </div>
-  <div class="party-members">${memberRows}</div>
-</div>`;
-  }).join('');
-
-  const totalCw = partiesData.reduce((s, p) => s + p.members.filter(Boolean).length, 0);
-  document.getElementById('cwCount').textContent = totalCw;
-  document.getElementById('cwUpdated').textContent = new Date().toLocaleTimeString();
-}
-
-/* ─────────────────────────────────────────────────────────────
-   PARSE GOOGLE SHEETS DATA
-   Adapt these functions once you share your exact sheet structure
-   ───────────────────────────────────────────────────────────── */
-function parseRosterFromSheet(rows) {
-  const C = CONFIG.COL;
-  return rows
-    .filter(r => r[C.NAME] && r[C.NAME].trim())
-    .map(r => {
-      const essences = [];
-      if (r[C.ESS_FIRE]  && r[C.ESS_FIRE].toLowerCase()  === 'yes') essences.push('Fire');
-      if (r[C.ESS_WATER] && r[C.ESS_WATER].toLowerCase() === 'yes') essences.push('Water');
-      if (r[C.ESS_EARTH] && r[C.ESS_EARTH].toLowerCase() === 'yes') essences.push('Earth');
-      if (r[C.ESS_WOOD]  && r[C.ESS_WOOD].toLowerCase()  === 'yes') essences.push('Wood');
-      if (r[C.ESS_IRON]  && r[C.ESS_IRON].toLowerCase()  === 'yes') essences.push('Iron');
-      if (r[C.ESS_LIFE]  && r[C.ESS_LIFE].toLowerCase()  === 'yes') essences.push('Life');
-
-      const armor = [];
-      if (r[C.CHEST]  && r[C.CHEST].toLowerCase()  !== 'no' && r[C.CHEST])  armor.push('Chest');
-      if (r[C.SHORTS] && r[C.SHORTS].toLowerCase() !== 'no' && r[C.SHORTS]) armor.push('Shorts');
-      if (r[C.BOOTS]  && r[C.BOOTS].toLowerCase()  !== 'no' && r[C.BOOTS])  armor.push('Boots');
-      if (r[C.GLOVES] && r[C.GLOVES].toLowerCase() !== 'no' && r[C.GLOVES]) armor.push('Gloves');
-      if (r[C.HELMET] && r[C.HELMET].toLowerCase() !== 'no' && r[C.HELMET]) armor.push('Helmet');
-
-      return {
-        name:     r[C.NAME]     || '',
-        cls:      r[C.CLASS]    || '',
-        activity: r[C.ACTIVITY] || '',
-        discord:  (r[C.DISCORD] || '').toLowerCase() !== 'no',
-        ally:     (r[C.IS_ALLY] || '').toLowerCase() === 'yes',
-        essences,
-        armor,
-        weapon:   r[C.WEAPON] && r[C.WEAPON].toLowerCase() !== 'no' ? r[C.WEAPON] : null,
-        ring:     r[C.RING]   && r[C.RING].toLowerCase()   !== 'no',
-        heart:    r[C.HEART]  && r[C.HEART].toLowerCase()  !== 'no',
-      };
-    });
-}
-
-/* Party parsing — will need adapting once sheet structure is confirmed */
-function parsePartiesFromSheet(rows) {
-  // Placeholder: same as mock for now
-  return MOCK_PARTIES;
-}
-
-/* ─────────────────────────────────────────────────────────────
-   LOAD DATA
-   ───────────────────────────────────────────────────────────── */
-async function loadData() {
-  document.getElementById('lastUpdated').textContent = 'refreshing…';
-  document.getElementById('cwUpdated').textContent   = 'refreshing…';
-  document.getElementById('serverName').textContent  = CONFIG.SERVER_NAME;
-
-  if (useMockData) {
-    // Demo mode
-    await new Promise(r => setTimeout(r, 400));
-    rosterData  = MOCK_ROSTER;
-    partiesData = MOCK_PARTIES;
-    document.getElementById('lastUpdated').textContent = 'demo mode — configure API key to use live data';
-    document.getElementById('cwUpdated').textContent   = 'demo mode';
-  } else {
-    try {
-      const base = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SPREADSHEET_ID}/values`;
-      const key  = `?key=${CONFIG.API_KEY}`;
-
-      const [rRes, pRes] = await Promise.all([
-        fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_ROSTER)}${key}`),
-        fetch(`${base}/${encodeURIComponent(CONFIG.RANGE_PARTIES)}${key}`)
-      ]);
-
-      const rJson = await rRes.json();
-      const pJson = await pRes.json();
-
-      rosterData  = parseRosterFromSheet(rJson.values || []);
-      partiesData = parsePartiesFromSheet(pJson.values || []);
-
-      const ts = new Date().toLocaleTimeString();
-      document.getElementById('lastUpdated').textContent = `last refreshed ${ts}`;
-      document.getElementById('cwUpdated').textContent   = `last refreshed ${ts}`;
-    } catch(e) {
-      console.error('Failed to load sheet data:', e);
-      document.getElementById('lastUpdated').textContent = 'error loading — check console';
-    }
-  }
-
-  buildFilters();
-  renderRoster();
-  renderParties();
-}
-
-/* ─────────────────────────────────────────────────────────────
    INIT
    ───────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   updateCountdown();
   setInterval(updateCountdown, 1000);
   loadData();
-  setInterval(loadData, 60000); // auto-refresh every 60 seconds
+  setInterval(loadData, 60_000); // auto-refresh every 60 seconds
 });
 </script>
 </body>
